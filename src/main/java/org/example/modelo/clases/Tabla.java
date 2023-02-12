@@ -1,6 +1,7 @@
 package org.example.modelo.clases;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Tabla {
@@ -52,13 +53,13 @@ public class Tabla {
 
     public Tabla(String nombreTabla, String[] listaAtributos, String[] listaTipoAtributos) {
         setNombre(nombreTabla);
-        setAtributos(List.of(listaAtributos));
-        setTipoAtributos(List.of(listaTipoAtributos));
+        setAtributos(Arrays.stream(listaAtributos).toList());
+        setTipoAtributos(Arrays.stream(listaTipoAtributos).toList());
     }
 
     public Tabla(String nombreTabla, String[] listaAtributos, String where) {
         setNombre(nombreTabla);
-        setAtributos(List.of(listaAtributos));
+        setAtributos(Arrays.stream(listaAtributos).toList());
         setWhere(where);
     }
 
@@ -67,9 +68,9 @@ public class Tabla {
         setWhere(where);
     }
 
-    public Tabla(String nombreTabla, String[] valores) {
+    public Tabla(String nombreTabla, String[] valoresAtributos) {
         setNombre(nombreTabla);
-        setValoresAtributos(List.of(valores));
+        setValoresAtributos(Arrays.stream(valoresAtributos).toList());
     }
 
 

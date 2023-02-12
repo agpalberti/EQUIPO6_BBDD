@@ -1,15 +1,18 @@
 package org.example.vista;
 
+import org.example.modelo.GestorBBDD;
 import org.example.modelo.clases.Tabla;
 import org.example.vista.strings.Literales;
+
+import java.util.List;
 import java.util.Scanner;
 
 public class GUI {
 
+    GestorBBDD model;
     static Scanner s = new Scanner(System.in);
 
-    public static int startMenu(){
-        System.out.println(Literales.mainMenu);
+    public int startMenu(){
 
         try{
             int input = s.nextInt();
@@ -23,11 +26,14 @@ public class GUI {
         }
     }
 
-    public static Tabla crearTabla(){
-        System.out.println(Literales.nombreTabla);
-
+    public GUI(GestorBBDD model){
+        this.model = model;
+    }
+    public Tabla crearTabla(){
         try {
+            System.out.println(Literales.nombreTabla);
             String nombreTabla = s.nextLine();
+            getColumnas(nombreTabla);
             System.out.println(Literales.atributos);
             String atributos = s.nextLine();
             System.out.println(Literales.tipoAtributos);
@@ -58,6 +64,7 @@ public class GUI {
 
         try{
             String nombreTabla = s.nextLine();
+            getColumnas(nombreTabla);
             System.out.println(Literales.atributos);
             String atributos = s.nextLine();
             System.out.println(Literales.clausulaWhere);
@@ -75,11 +82,11 @@ public class GUI {
         }
     }
 
-    public static Tabla eliminarTabla(){
-        System.out.println(Literales.nombreTabla);
+    public Tabla eliminarRegistrosTabla(){
 
         try{
             String nombreTabla = s.nextLine();
+            getColumnas(nombreTabla);
             System.out.println(Literales.clausulaWhere);
             String where = s.nextLine();
 
@@ -94,8 +101,8 @@ public class GUI {
         }
     }
 
-    public static Tabla insertarRegistroTabla(){
-        System.out.println(Literales.nombreTabla);
+    public Tabla insertarRegistroTabla(){
+
         try{
             String nombreTabla = s.nextLine();
             System.out.println(Literales.insertarRegistro);
@@ -112,6 +119,17 @@ public class GUI {
         catch(Exception e){
             return null;
         }
+    }
+
+    public void getColumnas(String tabla) {
+        System.out.println("\nColumnas de la tabla " + tabla + ":");
+        try {
+            for (String columna : model.getListaColumnas(tabla)) {
+                System.out.println("- " + columna);
+            }
+        } catch (Exception ignored) {
+        }
+
     }
 
     public static void exit(){
