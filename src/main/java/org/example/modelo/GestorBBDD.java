@@ -70,6 +70,7 @@ public class GestorBBDD {
                     return resultSetToList(tabla, stmt);
                 }
             } catch (Exception e) {
+                System.out.println(e);
                 System.out.println("Error en la consulta");
             }
         }
@@ -115,6 +116,7 @@ public class GestorBBDD {
                 conn.commit();
                 return true;
             } catch (Exception e) {
+                System.out.println(e);
                 conn.rollback();
             }
         }
