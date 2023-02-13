@@ -79,5 +79,35 @@ public class Tabla {
         setValoresAtributos(Arrays.stream(valoresAtributos).toList());
     }
 
+    public Tabla(String nombreTabla, String where, String[] valores) {
+        setNombre(nombreTabla);
+        setValoresAtributos(Arrays.stream(valores).toList());
+        setWhere(where);
+    }
 
+    // String que fusiona las columnas con el tipo de dato que almacenan, cada una separada por comas
+
+    public String fusionarAtributosTipos() {
+
+        StringBuilder fusion = new StringBuilder();
+
+        for (int i = 0; i < getAtributos().size(); i++) {
+            fusion.append(getAtributos().get(i)).append(" ").append(getTipoAtributos().get(i)).append(",");
+        }
+
+        return fusion.deleteCharAt(fusion.length() - 1).toString();
+
+    }
+
+    // String que junta los datos a insertar en un solo string
+    public String valoresAtributosToString() {
+        StringBuilder fusion = new StringBuilder();
+
+        for (String valor : valoresAtributos) {
+            fusion.append(" '").append(valor).append("',");
+        }
+
+        return fusion.deleteCharAt(fusion.length() - 1).toString();
+
+    }
 }

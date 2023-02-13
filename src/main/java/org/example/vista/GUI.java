@@ -19,8 +19,9 @@ public class GUI {
     // Imprime el menú principal y obtiene el int introducido
     public int startMenu() {
 
-        try{
-            int input = s.nextInt();
+        try {
+            System.out.println(Literales.mainMenu);
+            int input = Character.getNumericValue(s.nextLine().charAt(0));
 
             if (input > 0 && input <= 6) {
                 return input;
@@ -60,17 +61,22 @@ public class GUI {
     // Pide los datos para hacer una consulta
     public Tabla consultarTabla() {
 
-        try{
+        try {
+            System.out.println(Literales.nombreTabla);
             String nombreTabla = s.nextLine();
             getColumnas(nombreTabla);
             System.out.println(Literales.atributos);
             String atributos = s.nextLine();
             System.out.println(Literales.clausulaWhere);
             String where = s.nextLine();
+            //Si no introduce un where se pasa un null
+            if (where.isBlank()) {
+                where = null;
+            }
 
             String[] listaAtributos = atributos.split(",");
 
-            if (!nombreTabla.isBlank() && listaAtributos.length != 0 && !where.isBlank()) {
+            if (!nombreTabla.isBlank() && listaAtributos.length != 0) {
                 return new Tabla(nombreTabla, listaAtributos, where);
             } else return null;
         } catch (Exception e) {
@@ -108,7 +114,8 @@ public class GUI {
     // Pide los datos para eliminar un registro
     public Tabla eliminarRegistrosTabla() {
 
-        try{
+        try {
+            System.out.println(Literales.nombreTabla);
             String nombreTabla = s.nextLine();
             getColumnas(nombreTabla);
             System.out.println(Literales.clausulaWhere);
@@ -126,9 +133,11 @@ public class GUI {
     // Pide los datos para insertar un registro
     public Tabla insertarRegistroTabla() {
 
-        try{
+        try {
+            System.out.println(Literales.nombreTabla);
             String nombreTabla = s.nextLine();
-            System.out.println(Literales.insertarRegistro);
+            getColumnas(nombreTabla);
+            System.out.println(Literales.insertarValores);
             String valores = s.nextLine();
 
             String[] listaValores = valores.split(",");
@@ -157,7 +166,15 @@ public class GUI {
 
     }
 
-    public static void exit(){
+    public void printIncorrectInput() {
+        System.out.println(Literales.printIncorrect);
+    }
+
+    public void printCorrectInput() {
+        System.out.println(Literales.insertadoCorrectamente);
+    }
+
+    public void exit() {
         System.out.println(Literales.exit);
     }
 

@@ -28,6 +28,10 @@ public record Literales() {
     public static final String tipoAtributos = "\nIntroduzca los tipos de atributos en el órden introducidos en el paso anterior de la misma manera en lenguaje SQL (VARCHAR(15),INT,BIT...)";
     public static final String clausulaWhere = "\nIntroduzca una clausula where. Si no quieres un where, dale al enter y dejalo vacío";
     public static final String insertarRegistro = "\nIntroduce registros para cada atributo de esta manera (nombre,edad,estatura...)";
+    public static final String insertarValores = "\nIntroduce valores para cada atributo de esta manera (Julio,20,1.75...)";
+    public static final String printIncorrect = "\nInput incorrecto";
+
+    public static final String insertadoCorrectamente = "\nInsertado/Actualizado correctamente";
 
     public static final String exit = "\nAdiós.";
 }
