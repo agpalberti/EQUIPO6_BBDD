@@ -2,17 +2,21 @@ package org.example.modelo;
 
 
 import org.example.modelo.clases.Tabla;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GestorBBDD {
+
+    // Credenciales de nuestra BBDD
     private static final String URL = "jdbc:mysql://db4free.net:3306/equipo6hlc";
     private static final String USUARIO = "equipo6hlc";
     private static final String CLAVE = "equipo6hlc";
 
     private Connection conn = null;
 
+    // Realiza la conexión
     public void connect() {
 
         try {
@@ -24,6 +28,8 @@ public class GestorBBDD {
         }
     }
 
+    // Termina la conexión
+
     public void disconnect() throws SQLException {
         if (!conn.isClosed()) {
             conn.close();
@@ -33,8 +39,9 @@ public class GestorBBDD {
         }
     }
 
+    // Crea una tabla según los datos especificados por parámetro
     public boolean createTable(Tabla tabla) throws SQLException {
-        if (conn != null && !conn.isClosed()){
+        if (conn != null && !conn.isClosed()) {
             try {
                 conn.setAutoCommit(false);
                 Statement stmt = conn.createStatement();
@@ -42,7 +49,7 @@ public class GestorBBDD {
                 stmt.executeUpdate(sql);
                 conn.commit();
                 return true;
-            } catch (Exception e){
+            } catch (Exception e) {
                 System.out.println(e);
                 conn.rollback();
             }
@@ -50,6 +57,7 @@ public class GestorBBDD {
         return false;
     }
 
+    // Lista que contiene los datos consultados
     public List<String> consultarTabla(Tabla tabla) throws SQLException {
         if (conn != null && !conn.isClosed()) {
             try {
@@ -59,7 +67,7 @@ public class GestorBBDD {
                         sql += " WHERE " + tabla.getWhere();
                     }
                     PreparedStatement stmt = conn.prepareStatement(sql);
-                    return iterateResultSet(tabla,stmt);
+                    return resultSetToList(tabla, stmt);
                 }
             } catch (Exception e) {
                 System.out.println("Error en la consulta");
@@ -68,7 +76,8 @@ public class GestorBBDD {
         return null;
     }
 
-    private List<String> iterateResultSet (Tabla table, PreparedStatement ps) throws SQLException {
+    // Traduce un resultSet a una lista
+    private List<String> resultSetToList(Tabla table, PreparedStatement ps) throws SQLException {
         List<String> listaResult = new ArrayList<>();
         ResultSet resultSet = ps.executeQuery();
         while (resultSet.next()) {
@@ -82,9 +91,10 @@ public class GestorBBDD {
         return listaResult;
     }
 
-    public boolean actualizarRegistro(Tabla tabla) throws SQLException{
-        if (conn != null && !conn.isClosed()){
-            try{
+    // Actualiza un registro según el id de dicho objeto
+    public boolean actualizarRegistro(Tabla tabla) throws SQLException {
+        if (conn != null && !conn.isClosed()) {
+            try {
                 conn.setAutoCommit(false);
                 Statement stmt = conn.createStatement();
                 String sql = "UPDATE " + tabla.getNombre() + " SET ";
@@ -104,25 +114,24 @@ public class GestorBBDD {
                 stmt.executeUpdate(sql);
                 conn.commit();
                 return true;
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 conn.rollback();
             }
         }
         return false;
     }
 
-    public boolean insertarRegistro(Tabla tabla) throws SQLException{
-        if (conn != null && !conn.isClosed()){
-            try{
+    // Inserta un nuevo dato en una tabla
+    public boolean insertarRegistro(Tabla tabla) throws SQLException {
+        if (conn != null && !conn.isClosed()) {
+            try {
                 conn.setAutoCommit(false);
                 Statement ps = conn.createStatement();
                 String sql = "INSERT INTO " + tabla.getNombre() + " VALUES " + "(" + tabla.valoresAtributosToString() + ")";
                 ps.execute(sql);
                 conn.commit();
                 return true;
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 System.out.println(e);
                 conn.rollback();
             }
@@ -130,6 +139,7 @@ public class GestorBBDD {
         return false;
     }
 
+    // Elimina un dato
     public boolean eliminarRegistro(Tabla tabla) throws SQLException {
         if (conn != null && !conn.isClosed()) {
             try {
@@ -150,6 +160,7 @@ public class GestorBBDD {
         return false;
     }
 
+    // Devuelve una lista de todas las columnas
     public List<String> getListaColumnas(String nombreTabla) throws SQLException {
         List<String> columnas = new ArrayList<>();
         if (conn != null && !conn.isClosed()) {
@@ -165,6 +176,7 @@ public class GestorBBDD {
     }
 
 
+    // Devuelve una lista con todas las tablas disponibles
     public List<String> getListaTablas() throws SQLException {
         List<String> listaTablas = new ArrayList<>();
 

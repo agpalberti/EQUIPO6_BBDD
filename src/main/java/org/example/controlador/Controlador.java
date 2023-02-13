@@ -12,10 +12,12 @@ public class Controlador {
 
     private final GUI gui = new GUI(model);
 
+    // Al iniciar la clase, se conecta a la base de datos
     static {
         model.connect();
     }
 
+    // Devuelve la opción elegida mediante la GUI
     public int startMenu() {
 
         int intMenu = gui.startMenu();
@@ -24,6 +26,7 @@ public class Controlador {
         return -1;
     }
 
+    // Comunica la tabla creada mediante la interfaz de usuario hacia la base de datos, devuelve boolean según si se ha podido crear o no
     public boolean crearTabla() {
         Tabla tabla = gui.crearTabla();
         try {
@@ -37,6 +40,7 @@ public class Controlador {
         }
     }
 
+    // Comunica la tabla a actualizar a la BD
     public boolean actualizarTabla() {
         Tabla tabla = gui.actualizarTabla();
         try {
@@ -50,6 +54,7 @@ public class Controlador {
         }
     }
 
+    // Comunica la tabla a crear desde la GUI hacia la BBDD
     public boolean insertarRegistro() {
         Tabla tabla = gui.insertarRegistroTabla();
         try {
@@ -63,6 +68,7 @@ public class Controlador {
         }
     }
 
+    // Igual para borrar
     public boolean borrarRegistro() {
         Tabla tabla = gui.eliminarRegistrosTabla();
         try {
@@ -76,6 +82,7 @@ public class Controlador {
         }
     }
 
+    // Imprime todos los datos elegidos de una tabla
     public void consultar() {
         Tabla tabla = gui.consultarTabla();
         try {
@@ -88,6 +95,7 @@ public class Controlador {
         }
     }
 
+    // Acaba la conexión e imprime que la interfaz terminará
     public void onExit() {
         try {
             model.disconnect();
@@ -97,6 +105,7 @@ public class Controlador {
         gui.exit();
     }
 
+    // Imprime todas las tablas existentes
     public void printTablas() {
         System.out.println("\nTablas disponibles:");
         try {

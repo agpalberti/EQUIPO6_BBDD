@@ -4,11 +4,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+// Clase para la transferencia de datos, que hace intermediaria entre el controlador, el gestor y nuestra interfaz
 public class Tabla {
+    // Nombre de la tabla, ya sea a la hora de crearla o buscarla
     private String nombre;
+    // Lista de columnas de la tabla
     private List<String> atributos;
+    // Tipo que almacena cada tabla
     private List<String> tipoAtributos;
+    // Claúsula where para una sentencia sql
     private String where;
+    // Valor al insertar un nuevo dato en una columna
     private List<String> valoresAtributos;
 
     public String getNombre() {
